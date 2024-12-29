@@ -8,8 +8,6 @@ import reactHooksPlugin from 'eslint-plugin-react-hooks';
 import jsxA11yPlugin from 'eslint-plugin-jsx-a11y';
 // @ts-ignore
 import importPlugin from 'eslint-plugin-import';
-
-import prettier from 'eslint-config-prettier';
 import tseslint from 'typescript-eslint';
 import { FlatCompat } from '@eslint/eslintrc';
 
@@ -52,6 +50,7 @@ export default tseslint.config(
       ['jsx-a11y']: jsxA11yPlugin,
     },
     extends: [
+      // @ts-ignore
       ...compat.config(reactHooksPlugin.configs.recommended),
       ...compat.config(jsxA11yPlugin.configs.recommended),
     ],
@@ -89,13 +88,6 @@ export default tseslint.config(
           alwaysTryTypes: true,
         },
       },
-    },
-  },
-  {
-    files: ['app/**/*.{js,jsx,ts,tsx}'],
-    // @ts-ignore
-    rules: {
-      ...prettier.rules,
     },
   },
   {
