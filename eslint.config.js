@@ -6,27 +6,23 @@ import stylisticTs from '@stylistic/eslint-plugin-ts';
 import stylisticJsx from '@stylistic/eslint-plugin-jsx';
 import reactHooksPlugin from 'eslint-plugin-react-hooks';
 import jsxA11yPlugin from 'eslint-plugin-jsx-a11y';
-// @ts-ignore
+// @ts-expect-error ignore errors
 import importPlugin from 'eslint-plugin-import';
 import tseslint from 'typescript-eslint';
 import { FlatCompat } from '@eslint/eslintrc';
 
+import { includeIgnoreFile } from '@eslint/compat';
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const gitignorePath = path.resolve(__dirname, "./.gitignore");
+
 const compat = new FlatCompat();
 
 export default tseslint.config(
-  {
-    ignores: [
-      '**/*.d.ts',
-      '*.{js,jsx}',
-      'app/tsconfig.json',
-      'app/stories',
-      '**/*.css',
-      'node_modules/**/*',
-      './.next/*',
-      'out',
-      '.storybook',
-    ],
-  },
+  includeIgnoreFile(gitignorePath),
   {
     files: ['app/**/*.{jsx,ts,tsx}'],
   },
@@ -50,7 +46,7 @@ export default tseslint.config(
       ['jsx-a11y']: jsxA11yPlugin,
     },
     extends: [
-      // @ts-ignore
+      // @ts-expect-error ignore errors
       ...compat.config(reactHooksPlugin.configs.recommended),
       ...compat.config(jsxA11yPlugin.configs.recommended),
     ],
